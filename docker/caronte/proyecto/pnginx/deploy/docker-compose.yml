@@ -1,0 +1,13 @@
+services:
+  nginx:
+    build:
+      context: ../../../
+      dockerfile: ./dockerfiles/sweb/nginx/Dockerfile
+    image: linas/swebnginx    # Nombre de la imagen que se crea
+    container_name: ctLinasNginx
+    networks:
+      - netlinas
+
+networks:
+  netlinas:
+    external: true  # Se conecta a la red creada en la capa Base
