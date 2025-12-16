@@ -1,0 +1,23 @@
+main {
+    background-color: transparent;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+main section {
+    width: 100%; 
+    max-width: 1200px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+section article {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}

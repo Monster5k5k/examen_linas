@@ -1,0 +1,18 @@
+services:
+  pokeapi:
+    build:
+      context: ../../../
+      dockerfile: ./dockerfiles/spokeapi/Dockerfile
+    image: linas/pokeapi
+    container_name: ctLinasPokeApi
+    ports:
+      - "1988:3000"   # Tu Web se verá en el puerto 1988
+      - "2223:22"     # SSH en el puerto 2223
+    networks:
+      - netlinas
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Vital para React en Docker
+
+networks:
+  netlinas:
+    external: true
