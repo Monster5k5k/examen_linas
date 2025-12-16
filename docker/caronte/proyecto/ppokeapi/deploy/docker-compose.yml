@@ -6,15 +6,11 @@ services:
     image: linas/pokeapi
     container_name: ctLinasPokeApi
     ports:
-      # 1. REACT: El examen pide conectar al 3000.
-      # Mapeamos 1988(VPS) -> 3000(Contenedor)
-      - "1988:3000"
+      # REQUISITO DEL PROFESOR:
+      - "3000:3000"   # Puerto real 3000 -> Contenedor 3000
+      - "80:80"       # Puerto real 80   -> Contenedor 80
       
-      # 2. NGINX: El examen pide el puerto 80.
-      # Mapeamos 1989(VPS) -> 80(Contenedor)
-      - "1989:80"
-      
-      # 3. SSH
+      # SSH (Este déjalo en el 2223 para no perder tu conexión al VPS)
       - "2223:22"
     networks:
       - netlinas
