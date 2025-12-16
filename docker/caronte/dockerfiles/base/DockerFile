@@ -1,0 +1,26 @@
+FROM ubuntu:latest
+
+# Herramientas básicas de red y edición
+RUN apt-get update && apt-get install -yq --no-install-recommends \
+    net-tools iputils-ping curl nano \
+    && apt-get clean
+
+# Preparamos la estructura interna
+RUN mkdir -p /root/admin/base/ssh
+RUN mkdir -p /root/admin/base/usuario
+RUN mkdir -p /root/admin/base/sudo
+RUN mkdir -p /root/admin/common
+
+WORKDIR /root/admin/base
+
+# Copiamos TODOS los scripts que acabamos de crear
+COPY ./dockerfiles/base/admin/ /root/admin/base/
+
+# Copiamos la llave común
+COPY ./common/id_rsa.pub /root/admin/common/id_rsa.pub
+
+# Damos permisos de ejecución
+RUN chmod +x /root/admin/base/start.sh
+RUN chmod +x /root/admin/base/ssh/mainssh.sh
+RUN chmod +x /root/admin/base/usuario/mainuser.sh
+RUN chmod +x /root/admin/base/sudo/mainSudo.sh
