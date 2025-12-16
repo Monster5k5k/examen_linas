@@ -3,7 +3,7 @@ services:
     build:
       context: ../../../
       dockerfile: ./dockerfiles/base/Dockerfile
-    image: linas/ubbase   # <--- IMPORTANTE: Este es el nombre base para las siguientes capas
+    image: linas/ubbase       # <--- IMPORTANTE: Este nombre lo usarán las siguientes capas
     container_name: ctLinasBase
     networks:
       - netlinas

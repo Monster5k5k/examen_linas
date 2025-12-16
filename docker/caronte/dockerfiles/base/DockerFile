@@ -1,26 +1,30 @@
 FROM ubuntu:latest
 
-# Herramientas básicas de red y edición
+# 1. Instalamos herramientas básicas
 RUN apt-get update && apt-get install -yq --no-install-recommends \
-    net-tools iputils-ping curl nano \
+    net-tools iputils-ping curl nano git \
     && apt-get clean
 
-# Preparamos la estructura interna
-RUN mkdir -p /root/admin/base/ssh
-RUN mkdir -p /root/admin/base/usuario
-RUN mkdir -p /root/admin/base/sudo
-RUN mkdir -p /root/admin/common
+# 2. Preparamos la estructura de carpetas interna
+RUN mkdir -p /root/admin/base/ssh \
+    && mkdir -p /root/admin/base/usuario \
+    && mkdir -p /root/admin/base/sudo \
+    && mkdir -p /root/admin/common \
+    && mkdir -p /root/logs
 
 WORKDIR /root/admin/base
 
-# Copiamos TODOS los scripts que acabamos de crear
+# 3. Copiamos tus scripts dentro de la imagen
 COPY ./dockerfiles/base/admin/ /root/admin/base/
 
-# Copiamos la llave común
+# 4. Copiamos la llave pública (Asegúrate de que existe en common)
 COPY ./common/id_rsa.pub /root/admin/common/id_rsa.pub
 
-# Damos permisos de ejecución
-RUN chmod +x /root/admin/base/start.sh
-RUN chmod +x /root/admin/base/ssh/mainssh.sh
-RUN chmod +x /root/admin/base/usuario/mainuser.sh
-RUN chmod +x /root/admin/base/sudo/mainSudo.sh
+# 5. Damos permisos de ejecución a los scripts
+RUN chmod +x /root/admin/base/start.sh \
+    && chmod +x /root/admin/base/ssh/mainssh.sh \
+    && chmod +x /root/admin/base/usuario/mainuser.sh \
+    && chmod +x /root/admin/base/sudo/mainSudo.sh
+
+# 6. Definimos qué hace el contenedor al arrancar
+ENTRYPOINT ["/root/admin/base/start.sh"]
